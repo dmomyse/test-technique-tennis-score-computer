@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.test.technique</groupId>
+    <artifactId>tennis-score-computer-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <slf4j.version>2.0.7</slf4j.version>
+        <slf4j.reload4j.version>2.0.7</slf4j.reload4j.version>
+        <commons.lang.version>3.12.0</commons.lang.version>
+        <junit.jupiter.version>1.17.6</junit.jupiter.version>
+        <junit.jupiter.params.version>5.8.2</junit.jupiter.params.version>
+    </properties>
+
+    <name>Tennis score computer - Parent</name>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>tennis-score-computer</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Third party -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-reload4j</artifactId>
+                <version>${slf4j.reload4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit.jupiter.params.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.24.2</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <modules>
+                <module>tennis-score-computer-integration-tests</module>
+            </modules>
+        </profile>
+    </profiles>
+
+</project>
