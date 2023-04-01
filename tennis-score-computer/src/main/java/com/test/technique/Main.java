@@ -7,7 +7,7 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        LOGGER.info("Hello world!\n This is a tennis score computer");
+        LOGGER.info("This is a tennis score computer");
 
         final TennisGame tennisGame = new TennisGame();
         tennisGame.play();

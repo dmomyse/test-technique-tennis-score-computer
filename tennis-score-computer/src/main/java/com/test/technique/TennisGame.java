@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
-import static com.test.technique.Score.ZERO;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -14,11 +14,24 @@ public class TennisGame {
     private static final String EXIT_GAME = "EXIT";
     private static final String PLAYER_A_NAME = "A";
     private static final String PLAYER_B_NAME = "B";
-    private static Player playerA = new Player(PLAYER_A_NAME, ZERO);
-    private static Player playerB = new Player(PLAYER_B_NAME, ZERO);
+    private static final Pattern A_B_PATTERN = Pattern.compile("[A-B]+");
+    private final Board board;
+    private Boolean endGame;
 
-    public void play() {
-        boolean endGame = false;
+    public TennisGame() {
+        this.board = new Board();
+        this.endGame = false;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Boolean getEndGame() {
+        return endGame;
+    }
+
+    public TennisGame play() {
         Scanner input = new Scanner(System.in);
 
         LOGGER.info("Enter input: ");
@@ -44,57 +57,30 @@ public class TennisGame {
             for (int i = 0; i < inputChars.length; i++) {
                 String playerWonPoint = String.valueOf(inputChars[i]);
 
-                if (playerA.getName().equals(playerWonPoint)) {
-                    Score newScore = Score.values()[playerA.getScore().getNumber() + 1];
-                    calculateNewScore(playerA, playerB, newScore);
+                boolean hasPlayerAScored = PLAYER_A_NAME.equals(playerWonPoint);
+                if (hasPlayerAScored) {
+                    board.pAHasScored();
                 } else {
-                    Score newScore = Score.values()[playerB.getScore().getNumber() + 1];
-                    calculateNewScore(playerB, playerA, newScore);
+                    board.pBHasScored();
+                }
+
+                // evaluate winner.
+                if (board.hasAWinner()) {
+                    LOGGER.info("Player {} wins the game", hasPlayerAScored ? PLAYER_A_NAME : PLAYER_B_NAME);
+                    board.reset();
+                    LOGGER.info("New game, enter input: ");
+                } else if (board.isDeuce()) {
+                    LOGGER.info("deuce");
+                } else {
+                    LOGGER.info("Player {} : {} | Player {} : {}", PLAYER_A_NAME, board.getScorePA(), PLAYER_B_NAME, board.getScorePB());
                 }
             }
         }
-    }
-
-    private void calculateNewScore(final Player player1, final Player player2, final Score newScore) {
-        Score score = newScore;
-        if (score == Score.WIN || (score.getNumber() > 3 && player2.getScore().getNumber() < 3)) {
-            displayWinner(player1.getName());
-            resetGame();
-            return;
-        }
-
-        if (score == Score.FORTY && player2.getScore() == Score.FORTY) {
-            LOGGER.info("deuce");
-        } else if (player1.getScore() == Score.FORTY && player2.getScore() == Score.ADVANTAGE) {
-            score = Score.FORTY;
-            player1.setScore(score);
-            player2.setScore(score);
-            LOGGER.info("deuce");
-        } else {
-            if (PLAYER_A_NAME.equals(player1.getName())) {
-                LOGGER.info("Player {} : {} | Player {} : {}", player1.getName(), newScore, player2.getName(), player2.getScore());
-            } else {
-                LOGGER.info("Player {} : {} | Player {} : {}", player2.getName(), player2.getScore(), player1.getName(), newScore);
-            }
-        }
-
-        player1.setScore(score);
-    }
-
-    private void resetGame() {
-        playerA = new Player(PLAYER_A_NAME, ZERO);
-        playerB = new Player(PLAYER_B_NAME, ZERO);
-        LOGGER.info("New game enter input:");
-    }
-
-    private void displayWinner(final String name) {
-        LOGGER.info("Player {} wins the game", name);
+        return this;
     }
 
     private String normalize(final String toNormalize) {
-        final String normalized = isNotEmpty(toNormalize) ? toNormalize.toUpperCase() : EMPTY;
-        LOGGER.info("Normalizing input {} to {}", toNormalize, normalized);
-        return normalized;
+        return isNotEmpty(toNormalize) ? toNormalize.toUpperCase() : EMPTY;
     }
 
     /**
@@ -104,6 +90,6 @@ public class TennisGame {
      * @return true if the input is validate, false otherwise
      */
     private boolean validateInput(final String input) {
-        return input.matches("[A-B]+");
+        return A_B_PATTERN.matcher(input).matches();
     }
 }

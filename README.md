@@ -27,3 +27,18 @@ For example the following input “ABABAA” should print :
  “Player A : 40 / Player B : 30”
  “Player A wins the game
 ```
+
+For example the following input “ABABABABBB” should print :
+```
+ “Player A : 15 / Player B : 0”
+ “Player A : 15 / Player B : 15”
+ “Player A : 30 / Player B : 15”
+ “Player A : 30 / Player B : 30”
+ “Player A : 40 / Player B : 30”
+ “deuce”
+ “Player A : Advantage / Player B : 40”
+ “deuce”
+ “Player A : 40 / Player B : Advantage”
+ “Player B wins the game
+```
+
