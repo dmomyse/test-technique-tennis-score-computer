@@ -52,6 +52,8 @@ For example the following input “ABABABABBB” should print :
 ```
 
 ## Install
+`cd tennis-score-computer`
+
 `mvn package`
 
 ## Run
