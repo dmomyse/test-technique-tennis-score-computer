@@ -1,3 +1,12 @@
+# Readme
+- [Summary](#Readme)
+    * [Inscrutions](#instructions)
+    * [Description](#description)
+    * [Install](#install)
+    * [Run](#run)
+    * [Stop game](#stop-game)
+    * [Versions](#versions)
+
 # Instructions
 This Kata goal is to implement a simple tennis score computer.
 
@@ -42,3 +51,29 @@ For example the following input “ABABABABBB” should print :
  “Player B wins the game
 ```
 
+## Install
+`mvn package`
+
+## Run
+`java -jar target/tennis-score-computer-0.0.1-SNAPSHOT.jar`
+
+## Stop game
+type `exit`
+
+## Versions
+```
+└-(> java -version
+openjdk 17.0.3 2022-04-19
+OpenJDK Runtime Environment Temurin-17.0.3+7 (build 17.0.3+7)
+OpendJDK 64-Bit Server VM Temerin-17.0.3+7 (build 17.0.3+7, mixed mode, sharing)
+
+```
+
+```
+└-(> mvn --version
+Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+Maven home: C:\Program Files\apache-maven-3.6.3
+Java version: 17.0.3, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-17.0.3+7
+Default locale: fr_FR, platform encoding: UTF-8
+OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
+```

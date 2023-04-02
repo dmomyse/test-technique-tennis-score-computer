@@ -52,7 +52,6 @@ public class TennisGame {
                 continue;
             }
 
-            LOGGER.info(inputUser);
             char[] inputChars = inputUser.toCharArray();
             for (int i = 0; i < inputChars.length; i++) {
                 String playerWonPoint = String.valueOf(inputChars[i]);
@@ -68,6 +67,7 @@ public class TennisGame {
                 if (board.hasAWinner()) {
                     LOGGER.info("Player {} wins the game", hasPlayerAScored ? PLAYER_A_NAME : PLAYER_B_NAME);
                     board.reset();
+                    i = inputChars.length;
                     LOGGER.info("New game, enter input: ");
                 } else if (board.isDeuce()) {
                     LOGGER.info("deuce");
